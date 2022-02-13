@@ -1,0 +1,21 @@
+{% extends "base.html" %} 
+
+{% block title %}Homepage{% endblock %} 
+
+{% block content %}
+<h1>Home</h1>
+<p class="important">Welcome to my awesome homepage.</p>
+
+<div class="row" style="size: 2;">
+    <div class="column">
+        <a href="/survey">
+            <button>Start Survey!</button>
+        </a>
+    </div>
+    <div class="column">
+        <a href="/decline">
+            <button>Not interested</button>
+        </a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends "base.html" %} {% block title %}This Or That{% endblock %} {% block
+head %} {{ super() }}
+<style type="text/css">
+  .important {
+    color: #336699;
+  }
+</style>
+{% endblock %} {% block content %}
+<h1>Survey</h1>
+<p class="important">Welcome to the THIS or THAT survey!!</p>
+<form class="pure-form pure-form-aligned">
+  <fieldset>
+    <div class="pure-control-group">
+      <label for="aligned-name">Name</label>
+      <input type="text" id="aligned-name" placeholder="name" required />
+      <span class="pure-form-message-inline">This is a required field.</span>
+    </div>
+    <legend style="float: right">
+      Would you rather have more time or more money?
+    </legend>
+    <div class="pure-control-group">
+      <label for="aligned"></label>
+      <input
+        type="text"
+        id="aligned-more"
+        placeholder="I'd rather have more..."
+        required
+      />
+      <span class="pure-form-message-inline">This is a required field.</span>
+    </div>
+    <legend style="float: right">
+      What is the best headache reliever for you?
+    </legend>
+    <div class="pure-control-group pure-u-1 pure-u-md-1-3">
+      <label for="multi-state"></label>
+      <select id="multi-state language" class="pure-input-1-2">
+        <option value="advil">Advil</option>
+        <option value="tylenol">Tylenol</option>
+        <option value="sleep">Sleep</option>
+      </select>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend style="float: right">What is Your Favorite Pet?</legend>
+    <div class="pure-controls">
+      <label for="cereal-option-one" class="pure-checkbox">
+        <input type="checkbox" id="cereal-option-one" value="honey" />
+        Honey Bunches of Oats
+      </label>
+      <label for="cereal-option-two" class="pure-checkbox">
+        <input type="checkbox" id="cereal-option-two" value="cinnamon" />
+        Cinnamon Toast Crunch
+      </label>
+      <label for="cereal-option-three" class="pure-checkbox">
+        <input type="checkbox" id="cereal-option-three" value="lucky" />
+        Lucky Charms
+      </label>
+      <label for="cereal-option-four" class="pure-checkbox">
+        <input type="checkbox" id="cereal-option-four" value="cocoa" />
+        Cocoa Puffs
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend style="float: right">YouTube or Netflix</legend>
+    <div class="pure-controls">
+      <label for="entertainment-option-one" class="pure-radio">
+        <input
+          type="radio"
+          name="entertainment"
+          id="entertainment-option-one"
+          value="youtube"
+        />
+        YouTube
+      </label>
+      <label for="entertainment-option-two" class="pure-radio">
+        <input
+          type="radio"
+          name="entertainment"
+          id="entertainment-option-two"
+          value="netflix"
+        />
+        Netflix
+      </label>
+      <label for="entertainment-option-three" class="pure-radio">
+        <input
+          type="radio"
+          name="entertainment"
+          id="entertainment-option-three"
+          value="youtubeAndNetflix"
+        />
+        Both
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend style="float: right">Marvel or DC</legend>
+    <div class="pure-controls">
+      <label for="comic-option-one" class="pure-radio">
+        <input type="radio" name="comic" id="comic-option-one" value="marvel" />
+        Marvel
+      </label>
+      <label for="comic-option-two" class="pure-radio">
+        <input type="radio" name="comic" id="comic-option-two" value="dc" />
+        DC
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend style="float: right">Desktop Computer or Laptop</legend>
+    <div class="pure-controls">
+      <label for="pc-option-one" class="pure-radio">
+        <input type="radio" name="pc" id="pc-option-one" value="desktop" />
+        Desktop Computer
+      </label>
+      <label for="pc-option-two" class="pure-radio">
+        <input type="radio" name="pc" id="pc-option-two" value="laptop" />
+        Laptop
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend style="float: right">Mechanical Keyboard or Magic Keyboard</legend>
+    <div class="pure-controls">
+      <label for="keyboard-option-one" class="pure-radio">
+        <input
+          type="radio"
+          name="keyboard"
+          id="keyboard-option-one"
+          value="mechanical"
+        />
+        Mechanical Keyboard
+      </label>
+      <label for="keyboard-option-two" class="pure-radio">
+        <input
+          type="radio"
+          name="keyboard"
+          id="keyboard-option-two"
+          value="magic"
+        />
+        Magic Keyboard
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="pure-controls">
+      <label for="aligned-cb" class="pure-checkbox">
+        <input type="checkbox" id="aligned-cb" /> I&#x27;ve filled out all of
+        the questions
+      </label>
+      <button type="submit" class="pure-button pure-button-primary">
+        Submit
+      </button>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}
