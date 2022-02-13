@@ -1,2 +1,2 @@
-# surver-server
- Surver Server - HW1
+# survey-server
+ Survey Server - HW1
