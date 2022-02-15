@@ -16,6 +16,25 @@
     {% endblock %}
   </head>
   <body>
+    <div class="navbar">
+      <div class="pure-menu pure-menu-horizontal">
+        <a href="#" class="pure-menu-heading pure-menu-link">Survey Server</a>
+        <ul class="pure-menu-horizontal">
+          <li class="pure-menu-item">
+            <a href="{{ url_for("index") }} " class="pure-menu-link">Home</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="{{ url_for("survey") }} " class="pure-menu-link">Survey</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="{{ url_for("results") }} " class="pure-menu-link">Survey Results!</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="{{ url_for("summary") }} " class="pure-menu-link">Admin Summary</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
       {% block footer %} &copy; Copyright 2022 by Kinza Ahmed. {% endblock %}
