@@ -3,5 +3,11 @@
 {% block title %}Survey Results{% endblock %} 
 
 {% block content %}
+<h1>people:</h1>
+<ul>
+  {% for result in results %}
+    <li>{{ result }}</li>
+  {% endfor %}
+</ul>
 <h1>No results atm :(</h1>
 {% endblock %}

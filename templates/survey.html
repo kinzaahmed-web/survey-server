@@ -8,7 +8,7 @@ head %} {{ super() }}
 {% endblock %} {% block content %}
 <h1>Survey</h1>
 <p class="important">Welcome to the THIS or THAT survey!!</p>
-<form class="pure-form pure-form-aligned" action="{{ url_for("new_survey") }}" method="POST">
+<form class="pure-form pure-form-aligned" action="{{ url_for('survey') }}" method="POST">
   <fieldset>
     <div class="pure-control-group">
       <label for="aligned-name">Name</label>
