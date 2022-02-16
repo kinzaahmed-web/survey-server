@@ -1,13 +1,14 @@
 from app import app
-from flask import render_template
+from flask import render_template, request, g, redirect, url_for, jsonify
 
 @app.route("/")
 def index():
     return render_template("home.html")
 
-@app.route("/survey")
+@app.route("/survey", methods=['POST'])
 def survey():
-    return render_template("survey.html")
+    print(request.form)
+    return render_template("survey.html") 
 
 @app.route("/decline")
 def decline():

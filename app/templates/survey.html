@@ -8,11 +8,11 @@ head %} {{ super() }}
 {% endblock %} {% block content %}
 <h1>Survey</h1>
 <p class="important">Welcome to the THIS or THAT survey!!</p>
-<form class="pure-form pure-form-aligned">
+<form class="pure-form pure-form-aligned" action="{{ url_for("new_survey") }}" method="POST">
   <fieldset>
     <div class="pure-control-group">
       <label for="aligned-name">Name</label>
-      <input type="text" id="aligned-name" placeholder="name" required />
+      <input type="text" id="aligned-name" name="surveyor_name" placeholder="name" required />
       <span class="pure-form-message-inline">This is a required field.</span>
     </div>
     <legend style="float: right">
@@ -23,6 +23,7 @@ head %} {{ super() }}
       <input
         type="text"
         id="aligned-more"
+        name="more_time_money"
         placeholder="I'd rather have more..."
         required
       />
@@ -33,7 +34,7 @@ head %} {{ super() }}
     </legend>
     <div class="pure-control-group pure-u-1 pure-u-md-1-3">
       <label for="multi-state"></label>
-      <select id="multi-state language" class="pure-input-1-2">
+      <select id="multi-state language" name="headache" class="pure-input-1-2">
         <option value="advil">Advil</option>
         <option value="tylenol">Tylenol</option>
         <option value="sleep">Sleep</option>
