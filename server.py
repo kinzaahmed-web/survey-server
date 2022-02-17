@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, g, redirect, url_for, jsonify
+from datetime import date
 import db
 
 app = Flask(__name__)
@@ -14,16 +15,18 @@ def index():
 @app.route("/survey", methods=['GET', 'POST'])
 def survey():
     # print(request.form)
-    surveyor_name = request.form.get("name")
+    surveyor_name = request.form.get("surveyor_name")
     more_time_money = request.form.get("more_time_money")
     headache = request.form.get("headache")
-    entertainment = request.get.form("netflix")
-    comic = request.get.form("comic")
-    pc = request.get.form("pc")
-    keyboard = request.get.form("keyboard")
-    print(surveyor_name, more_time_money, headache, entertainment, comic, pc, keyboard)
-    # name = request.form.get("name", "unnamed friend")
-    # db.add_person(name)
+    entertainment = request.form.get("entertainment")
+    comic = request.form.get("comic")
+    pc = request.form.get("pc")
+    keyboard = request.form.get("keyboard")
+    completion_date = date.today()
+    if (surveyor_name != None and more_time_money != None and headache != None and entertainment != None and comic != None and pc != None 
+    and keyboard != None):
+        db.add_survey(surveyor_name, completion_date, more_time_money, headache, 'hello', entertainment, comic, pc, keyboard)
+        return redirect(url_for('thanks'))
     return render_template("survey.html") 
 
 @app.route("/decline")
