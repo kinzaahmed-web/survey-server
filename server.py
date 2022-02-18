@@ -14,7 +14,6 @@ def index():
 
 @app.route("/survey", methods=['GET', 'POST'])
 def survey():
-    # print(request.form)
     surveyor_name = request.form.get("surveyor_name")
     more_time_money = request.form.get("more_time_money")
     headache = request.form.get("headache")
@@ -23,9 +22,20 @@ def survey():
     pc = request.form.get("pc")
     keyboard = request.form.get("keyboard")
     completion_date = date.today()
-    if (surveyor_name != None and more_time_money != None and headache != None and entertainment != None and comic != None and pc != None 
-    and keyboard != None):
-        db.add_survey(surveyor_name, completion_date, more_time_money, headache, 'hello', entertainment, comic, pc, keyboard)
+    survey = { 
+        'surveyor_name': surveyor_name, 
+        'completion_date': completion_date, 
+        'more_time_money': more_time_money, 
+        'headache': headache, 
+        'cereal': 'hello', 
+        'entertainment': entertainment, 
+        'comic': comic, 
+        'pc': pc, 
+        'keyboard': keyboard
+    }
+    # check if everything is filled out before passing to db
+    if all(value != None for value in survey.values()):
+        db.add_survey(survey)
         return redirect(url_for('thanks'))
     return render_template("survey.html") 
 

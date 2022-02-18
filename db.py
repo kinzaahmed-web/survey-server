@@ -38,12 +38,34 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
-def add_survey (surveyor_name, completion_date, more_time_money, headache, cereal, entertainment, comic, pc, keyboard):
+def add_survey(survey):
     # Since we're using connection pooling, it's not as big of a deal to have
     # lots of short-lived cursors (I think -- worth testing if we ever go big)
     with get_db_cursor(True) as cur:
-        current_app.logger.info("Adding survey response from %s", surveyor_name)
-        cur.execute("INSERT INTO this_or_that (surveyor_name, completion_date, more_time_money, headache, cereal, entertainment, comic, pc, keyboard) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (surveyor_name, completion_date, more_time_money, headache, cereal, entertainment, comic, pc, keyboard))
+        current_app.logger.info("Adding survey response from %s", survey['surveyor_name'])
+        cur.execute("""INSERT INTO this_or_that (
+                                                    surveyor_name, 
+                                                    completion_date, 
+                                                    more_time_money, 
+                                                    headache, 
+                                                    cereal, 
+                                                    entertainment, 
+                                                    comic, 
+                                                    pc, 
+                                                    keyboard
+                                                ) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
+                                                (
+                                                    survey['surveyor_name'], 
+                                                    survey['completion_date'], 
+                                                    survey['more_time_money'], 
+                                                    survey['headache'], 
+                                                    survey['cereal'], 
+                                                    survey['entertainment'], 
+                                                    survey['comic'], 
+                                                    survey['pc'], 
+                                                    survey['keyboard']
+                                                )
+                    )
 
 def get_survey_results(page = 0, surveys_per_page = 10):
     limit = surveys_per_page

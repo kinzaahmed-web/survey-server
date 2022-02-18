@@ -11,7 +11,7 @@ head %} {{ super() }}
 <form class="pure-form pure-form-aligned" action="{{ url_for('survey') }}" method="POST">
   <fieldset>
     <div class="pure-control-group">
-      <label for="aligned-name">Name</label>
+      <label for="surveyor_name">Name</label>
       <input type="text" id="aligned-name" name="surveyor_name" placeholder="name" required />
       <span class="pure-form-message-inline">This is a required field.</span>
     </div>
@@ -19,7 +19,7 @@ head %} {{ super() }}
       Would you rather have more time or more money?
     </legend>
     <div class="pure-control-group">
-      <label for="aligned"></label>
+      <label for="more_time_money"></label>
       <input
         type="text"
         id="aligned-more"
@@ -33,30 +33,30 @@ head %} {{ super() }}
       What is the best headache reliever for you?
     </legend>
     <div class="pure-control-group pure-u-1 pure-u-md-1-3">
-      <label for="multi-state"></label>
-      <select id="multi-state language" name="headache" class="pure-input-1-2">
-        <option name="headache" value="advil">Advil</option>
-        <option name="headache" value="tylenol">Tylenol</option>
-        <option name="headache" value="sleep">Sleep</option>
+      <label for="headache"></label>
+      <select id="headache" name="headache" class="pure-input-1-2" required>
+        <option value="advil">Advil</option>
+        <option value="tylenol">Tylenol</option>
+        <option value="sleep">Sleep</option>
       </select>
     </div>
   </fieldset>
   <fieldset>
     <legend style="float: right">What is Your Favorite Cereal?</legend>
     <div class="pure-controls">
-      <label for="cereal-option-one" class="pure-checkbox">
-        <input type="checkbox" id="cereal-option-one" value="honey" />
+      <label class="pure-checkbox">
+        <input type="checkbox" id="cereal-option-one" value="honey"/>
         Honey Bunches of Oats
       </label>
-      <label for="cereal-option-two" class="pure-checkbox">
+      <label class="pure-checkbox">
         <input type="checkbox" id="cereal-option-two" value="cinnamon" />
         Cinnamon Toast Crunch
       </label>
-      <label for="cereal-option-three" class="pure-checkbox">
+      <label class="pure-checkbox">
         <input type="checkbox" id="cereal-option-three" value="lucky" />
         Lucky Charms
       </label>
-      <label for="cereal-option-four" class="pure-checkbox">
+      <label class="pure-checkbox">
         <input type="checkbox" id="cereal-option-four" value="cocoa" />
         Cocoa Puffs
       </label>
@@ -65,29 +65,30 @@ head %} {{ super() }}
   <fieldset>
     <legend style="float: right">YouTube or Netflix</legend>
     <div class="pure-controls">
-      <label for="entertainment-option-one" class="pure-radio">
+      <label for="youtube" class="pure-radio">
         <input
           type="radio"
           name="entertainment"
-          id="entertainment-option-one"
+          id="youtube"
           value="youtube"
+          required
         />
         YouTube
       </label>
-      <label for="entertainment-option-two" class="pure-radio">
+      <label for="netflix" class="pure-radio">
         <input
           type="radio"
           name="entertainment"
-          id="entertainment-option-two"
+          id="netflix"
           value="netflix"
         />
         Netflix
       </label>
-      <label for="entertainment-option-three" class="pure-radio">
+      <label for="youtubeAndNetflix" class="pure-radio">
         <input
           type="radio"
           name="entertainment"
-          id="entertainment-option-three"
+          id="youtubeAndNetflix"
           value="youtubeAndNetflix"
         />
         Both
@@ -97,12 +98,12 @@ head %} {{ super() }}
   <fieldset>
     <legend style="float: right">Marvel or DC</legend>
     <div class="pure-controls">
-      <label for="comic-option-one" class="pure-radio">
-        <input type="radio" name="comic" id="comic-option-one" value="marvel" />
+      <label for="marvel" class="pure-radio">
+        <input type="radio" name="comic" id="marvel" value="marvel" required/>
         Marvel
       </label>
-      <label for="comic-option-two" class="pure-radio">
-        <input type="radio" name="comic" id="comic-option-two" value="dc" />
+      <label for="dc" class="pure-radio">
+        <input type="radio" name="comic" id="dc" value="dc" />
         DC
       </label>
     </div>
@@ -110,12 +111,12 @@ head %} {{ super() }}
   <fieldset>
     <legend style="float: right">Desktop Computer or Laptop</legend>
     <div class="pure-controls">
-      <label for="pc-option-one" class="pure-radio">
-        <input type="radio" name="pc" id="pc-option-one" value="desktop" />
+      <label for="desktop" class="pure-radio">
+        <input type="radio" name="pc" id="desktop" value="desktop" required/>
         Desktop Computer
       </label>
-      <label for="pc-option-two" class="pure-radio">
-        <input type="radio" name="pc" id="pc-option-two" value="laptop" />
+      <label for="laptop" class="pure-radio">
+        <input type="radio" name="pc" id="laptop" value="laptop" />
         Laptop
       </label>
     </div>
@@ -123,20 +124,21 @@ head %} {{ super() }}
   <fieldset>
     <legend style="float: right">Mechanical Keyboard or Magic Keyboard</legend>
     <div class="pure-controls">
-      <label for="keyboard-option-one" class="pure-radio">
+      <label for="mechanical" class="pure-radio">
         <input
           type="radio"
           name="keyboard"
-          id="keyboard-option-one"
+          id="mechanical"
           value="mechanical"
+          required
         />
         Mechanical Keyboard
       </label>
-      <label for="keyboard-option-two" class="pure-radio">
+      <label for="magic" class="pure-radio">
         <input
           type="radio"
           name="keyboard"
-          id="keyboard-option-two"
+          id="magic"
           value="magic"
         />
         Magic Keyboard
@@ -145,10 +147,6 @@ head %} {{ super() }}
   </fieldset>
   <fieldset>
     <div class="pure-controls">
-      <label for="aligned-cb" class="pure-checkbox">
-        <input type="checkbox" id="aligned-cb" /> I&#x27;ve filled out all of
-        the questions
-      </label>
       <button type="submit" class="pure-button pure-button-primary">
         Submit
       </button>
