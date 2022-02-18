@@ -3,18 +3,18 @@
 {% block title %}Homepage{% endblock %} 
 
 {% block content %}
-<h1>Home</h1>
-<p class="important">Welcome to my awesome homepage.</p>
+<h1 class="home">THIS or THAT Survey!</h1>
+<p class="home">Welcome to my awesome homepage.</p>
 
-<div class="row" style="size: 2;">
+<div class="home-row" style="size: 2;">
     <div class="column">
         <a href="{{ url_for("survey") }}">
-            <button>Start Survey!</button>
+            <button class="homebutton">Start Survey!</button>
         </a>
     </div>
     <div class="column">
         <a href="{{ url_for("decline") }}">
-            <button>Not interested</button>
+            <button class="homebutton">Not interested</button>
         </a>
     </div>
   </div>
