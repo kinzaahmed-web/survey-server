@@ -2,7 +2,7 @@ from contextlib import contextmanager
 import logging
 import os
 
-from flask import current_app, g
+from flask import current_app, g, jsonify
 
 import psycopg2
 from psycopg2.pool import ThreadedConnectionPool
@@ -67,9 +67,24 @@ def add_survey(survey):
                                                 )
                     )
 
-def get_survey_results(page = 0, surveys_per_page = 10):
+def get_survey_results(reverse, page = 0, surveys_per_page = 10):
     limit = surveys_per_page
     offset = page*surveys_per_page
     with get_db_cursor() as cur:
-        cur.execute("select * from this_or_that order by survey_id limit %s offset %s", (limit, offset))
-        return cur.fetchall()
+        if reverse:
+            cur.execute("SELECT * FROM this_or_that ORDER BY completion_date DES limit %s offset %s", (limit, offset))
+        else:
+            cur.execute("SELECT * FROM this_or_that ORDER BY completion_date ASC limit %s offset %s", (limit, offset))
+        results = [{
+                    'id': record[0],
+                    'surveyor_name': record[1],
+                    'completion_date': record[2],
+                    'more_time_money': record[3],
+                    'headache': record[4],
+                    'cereal': record[5],
+                    'entertainment': record[6],
+                    'comic': record[7],
+                    'pc': record[8],
+                    'keyboard': record[9],
+                    'suggest': record[10]} for record in cur]
+        return results

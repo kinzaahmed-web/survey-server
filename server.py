@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, g, redirect, url_for, jsonify
-from datetime import date
+from datetime import datetime
 import db
 
 app = Flask(__name__)
@@ -17,27 +17,31 @@ def survey():
     surveyor_name = request.form.get("surveyor_name")
     more_time_money = request.form.get("more_time_money")
     headache = request.form.get("headache")
+    cereal = request.form.get("cereal")
+    if (cereal != "yes"):
+        cereal = "no"
     entertainment = request.form.get("entertainment")
     comic = request.form.get("comic")
     pc = request.form.get("pc")
     keyboard = request.form.get("keyboard")
-    completion_date = date.today()
+    completion_date = datetime.now()
     survey = { 
         'surveyor_name': surveyor_name, 
         'completion_date': completion_date, 
         'more_time_money': more_time_money, 
         'headache': headache, 
-        'cereal': 'hello', 
+        'cereal': cereal, 
         'entertainment': entertainment, 
         'comic': comic, 
         'pc': pc, 
         'keyboard': keyboard
     }
     # check if everything is filled out before passing to db
-    if all(value != None for value in survey.values()):
-        db.add_survey(survey)
-        return redirect(url_for('thanks'))
-    return render_template("survey.html") 
+    if (value == None for value in survey.values()):
+        return render_template("survey.html") 
+    
+    db.add_survey(survey)
+    return redirect(url_for('thanks'))
 
 @app.route("/decline")
 def decline():
@@ -49,7 +53,10 @@ def thanks():
 
 @app.route('/api/results', methods=['GET'])
 def results():
-    return render_template("results.html", results=db.get_survey_results())
+    reverse = request.args.get("reverse", False)
+    if (reverse != False):
+        reverse = True if reverse.lower() == "true" else False
+    return jsonify(db.get_survey_results(reverse))
 
 @app.route("/admin/summary")
 def summary():
