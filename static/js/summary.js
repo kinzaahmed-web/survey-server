@@ -5,247 +5,385 @@ document.addEventListener('DOMContentLoaded', function () {
             reverse: true,
         },
         success: function (result) {
-            extractTimeseriesData(result);
+            // extractTimeseriesData(result);
             setupCharts(
-                extractDayData(result),
-                extractTimeData(result),
-                extractInfoData(result),
-                extractTimeseriesData(result)
+                getHeadacheData(result),
+                getCerealData(result),
+                getEntertainmentData(result),
+                getComicData(result),
+                getPCData(result),
+                getKeyboardData(result),
+                getNumSurveysPerDay(result)
             );
-            let commentList = document.querySelector('#commentList');
+            var moreTimeMoreMoney = document.getElementById('moreTimeMoreMoney');
+            var suggestedList = document.getElementById('#suggestedList');
             result.forEach((item) => {
-                if (item['info'] !== null) {
+                if (item['more_time_money'] !== null) {
                     var node = document.createElement('LI'); 
-                    var textnode = document.createTextNode(`${item['nickname']} says: ${item['info']}`);
-                    node.appendChild(textnode); // Append the text to <li>
+                    var textnode = document.createTextNode(`${item['more_time_money']}`);
+                    node.appendChild(textnode);
+                    moreTimeMoreMoney.appendChild(node);
+                }
+                if (item['suggested-questions'] !== null || item['suggested-questions'] !== undefined) {
+                    var node = document.createElement('LI'); 
+                    var textnode = document.createTextNode(`${item['suggested-questions']}`);
+                    node.appendChild(textnode);
                     commentList.appendChild(node);
                 }
             });
         },
     });
-});
 
-let extractDayData = (result) => {
-    let dayData = new Array(7);
-    dayData.fill(0);
-    result.forEach((item) => {
-        if (item['best_day'] === 'Monday') {
-            dayData[0]++;
-        } else if (item['best_day'] === 'Tuesday') {
-            dayData[1]++;
-        } else if (item['best_day'] === 'Wednesday') {
-            dayData[2]++;
-        } else if (item['best_day'] === 'Thursday') {
-            dayData[3]++;
-        } else if (item['best_day'] === 'Friday') {
-            dayData[4]++;
-        } else if (item['best_day'] === 'Saturday') {
-            dayData[5]++;
-        } else {
-            dayData[6]++;
-        }
-    });
-    return dayData;
-};
-
-let extractTimeData = (result) => {
-    let timeData = new Array(4);
-    timeData.fill(0);
-    result.forEach((item) => {
-        if (item['best_time'] === 'Morning') {
-            timeData[0]++;
-        } else if (item['best_time'] === 'Afternoon') {
-            timeData[1]++;
-        } else if (item['best_time'] === 'Evening') {
-            timeData[2]++;
-        } else {
-            timeData[3]++;
-        }
-    });
-    return timeData;
-};
-
-let extractInfoData = (result) => {
-    let count = 0;
-    result.forEach((item) => {
-        if (item['info'] !== null) {
-            count++;
-        }
-    });
-    return [count, result.length - count];
-};
-
-let extractTimeseriesData = (result) => {
-    // let endDate = Date.parse(result[0]['timestamp']);
-    // let startDate = Date.parse(result[result.length - 1]['timestamp']);
-    let map = {};
-    result.forEach((item) => {
-        let date = moment(Date.parse(item['timestamp'])).startOf('day');
-        if (map.hasOwnProperty(date)) {
-            map[date] += 1;
-        } else {
-            map[date] = 1;
-        }
-    });
-
-    let date = moment(
-        Date.parse(result[result.length - 1]['timestamp'])
-    ).startOf('day');
-    let timeSeriesData = [];
-    while (date.isBefore(moment())) {
-        if (map.hasOwnProperty(date)) {
-            timeSeriesData.push({ t: date, y: map[date] });
-        } else {
-            timeSeriesData.push({ t: date, y: 0 });
-        }
-        date = date.clone().add(1, 'day').startOf('day');
-    }
-    return timeSeriesData;
-};
-
-let setupCharts = (dayData, timeData, infoData, timeseriesData) => {
-    var bestDayCanvas = document
-        .getElementById('bestDayBarChart')
-        .getContext('2d');
-    var bestDayBarChart = new Chart(bestDayCanvas, {
-        // The type of chart we want to create
-        type: 'bar',
-
-        // The data for our dataset
-        data: {
-            labels: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-            ],
-            datasets: [
-                {
-                    label: 'Prefered days',
-                    backgroundColor: '#caaaff',
-                    borderColor: '#caaaff',
-                    data: dayData,
-                },
-            ],
-        },
-        options: {
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                    },
-                ],
-            },
-        },
-    });
-
-    var bestTimeCanvas = document
-        .getElementById('bestTimeBarChart')
-        .getContext('2d');
-    var bestTimeBarChart = new Chart(bestTimeCanvas, {
-        // The type of chart we want to create
-        type: 'bar',
-
-        // The data for our dataset
-        data: {
-            labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
-            datasets: [
-                {
-                    label: 'Prefered times',
-                    backgroundColor: '#caaaff',
-                    borderColor: '#caaaff',
-                    data: timeData,
-                },
-            ],
-        },
-        options: {
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                    },
-                ],
-            },
-        },
-    });
-
-    var sayMoreCanvas = document
-        .getElementById('sayMoreBarChart')
-        .getContext('2d');
-    var sayMoreBarChart = new Chart(sayMoreCanvas, {
-        // The type of chart we want to create
-        type: 'bar',
-
-        // The data for our dataset
-        data: {
-            labels: ['Provided more info', 'No additional info'],
-            datasets: [
-                {
-                    label: 'Additional info',
-                    backgroundColor: '#caaaff',
-                    borderColor: '#caaaff',
-                    data: infoData,
-                },
-            ],
-        },
-        options: {
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                    },
-                ],
-            },
-        },
-    });
-
-    var timeSeriesCanvas = document
-        .getElementById('timeSeriesChart')
-        .getContext('2d');
-
-    var dat_1 = {
-        label: '# of responses per day',
-        borderColor: '#caaaff',
-        backgroundColor: '#caaaff',
-        data: timeseriesData,
-        type: 'line',
-        pointRadius: 0,
-        fill: false,
-        lineTension: 0,
-        borderWidth: 2,
+    var getHeadacheData = (result) => {
+        var headacheData = new Array(3);
+        headacheData.fill(0);
+        result.forEach((item) => {
+            if (item['headache'] === 'advil') {
+                headacheData[0]++;
+            } else if (item['headache'] === 'tylenol') {
+                headacheData[1]++;
+            } else if (item['headache'] === 'sleep') {
+                headacheData[2]++;
+            } 
+        });
+        return headacheData;
     };
-    var timeSeriesChart = new Chart(timeSeriesCanvas, {
-        type: 'line',
-        data: {
-            datasets: [dat_1],
-        },
-        options: {
-            scales: {
-                xAxes: [
-                    {
-                        type: 'time',
-                        time: {
-                            unit: 'day',
-                        },
-                    },
+
+    var getCerealData = (result) => {
+        var cerealData = new Array(2);
+        cerealData.fill(0);
+        result.forEach((item) => {
+            if (item['cereal'] === 'yes') {
+                cerealData[0]++;
+            } else if (item['cereal'] === 'no') {
+                cerealData[1]++;
+            } 
+        });
+        return cerealData;
+    };
+
+    var getEntertainmentData = (result) => {
+        var entertainmentData = new Array(3);
+        entertainmentData.fill(0);
+        result.forEach((item) => {
+            if (item['entertainment'] === 'youtube') {
+                entertainmentData[0]++;
+            } else if (item['entertainment'] === 'netflix') {
+                entertainmentData[1]++;
+            } else if (item['entertainment'] === 'both') {
+                entertainmentData[2]++;
+            } 
+        });
+        return entertainmentData;
+    };
+
+    var getComicData = (result) => {
+        var comicData = new Array(2);
+        comicData.fill(0);
+        result.forEach((item) => {
+            if (item['comic'] === 'marvel') {
+                comicData[0]++;
+            } else if (item['comic'] === 'dc') {
+                comicData[1]++;
+            } 
+        });
+        return comicData;
+    };
+
+    var getPCData = (result) => {
+        var pcData = new Array(2);
+        pcData.fill(0);
+        result.forEach((item) => {
+            if (item['pc'] === 'desktop computer') {
+                pcData[0]++;
+            } else if (item['pc'] === 'laptop') {
+                pcData[1]++;
+            } 
+        });
+        return pcData;
+    };
+
+    var getKeyboardData = (result) => {
+        var keyboardData = new Array(2);
+        keyboardData.fill(0);
+        result.forEach((item) => {
+            if (item['keyboard'] === 'mechanical keyboard') {
+                keyboardData[0]++;
+            } else if (item['keyboard'] === 'magic keyboard') {
+                keyboardData[1]++;
+            } 
+        });
+        return keyboardData;
+    };
+
+    var getNumSurveysPerDay = (result) => {
+        var map = {};
+        result.forEach((item) => {
+            var date = moment(Date.parse(item['completion_date'])).startOf('day');
+            if (map.hasOwnProperty(date)) {
+                map[date] += 1;
+            } else {
+                map[date] = 1;
+            }
+        });
+    
+        var date = moment(
+            Date.parse(result[result.length - 1]['completion_date'])
+        ).startOf('day');
+        var timeSeriesData = [];
+        while (date.isBefore(moment())) {
+            if (map.hasOwnProperty(date)) {
+                timeSeriesData.push({ t: date, y: map[date] });
+            } else {
+                timeSeriesData.push({ t: date, y: 0 });
+            }
+            date = date.clone().add(1, 'day').startOf('day');
+        }
+        return timeSeriesData;
+    };
+
+    var setupCharts = (headacheData, cerealData, entertainmentData, comicData, pcData, keyboardData, dateData) => {
+
+        var headacheCanvas = document
+        .getElementById('headacheChart')
+        .getContext('2d');
+
+        new Chart(headacheCanvas, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Advil',
+                    'Tylenol',
+                    'Sleep',
                 ],
-                yAxes: [
+                datasets: [
                     {
-                        ticks: {
-                            beginAtZero: true,
-                        },
+                        label: 'Number of people',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        data: headacheData,
                     },
                 ],
             },
-        },
-    });
-};
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+
+        var cerealCanvas = document
+        .getElementById('cerealChart')
+        .getContext('2d');
+
+        new Chart(cerealCanvas, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Yes',
+                    'No',
+                ],
+                datasets: [
+                    {
+                        label: 'Number of people',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        data: cerealData,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+
+        var entertainmentCanvas = document
+        .getElementById('entertainmentChart')
+        .getContext('2d');
+
+        new Chart(entertainmentCanvas, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'YouTube',
+                    'Netflix',
+                    'YouTube and Netflix'
+                ],
+                datasets: [
+                    {
+                        label: 'Number of people',
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        data: entertainmentData,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+
+        var comicCanvas = document
+        .getElementById('comicChart')
+        .getContext('2d');
+
+        new Chart(comicCanvas, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Marvel',
+                    'DC'
+                ],
+                datasets: [
+                    {
+                        label: 'Number of people',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        data: comicData,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+
+        var pcCanvas = document
+        .getElementById('pcChart')
+        .getContext('2d');
+
+        new Chart(pcCanvas, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Desktop Computer',
+                    'Laptop'
+                ],
+                datasets: [
+                    {
+                        label: 'Number of people',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        data: pcData,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+
+        var keyboardCanvas = document
+        .getElementById('keyboardChart')
+        .getContext('2d');
+
+        new Chart(keyboardCanvas, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Mechanical',
+                    'Magic'
+                ],
+                datasets: [
+                    {
+                        label: 'Number of People',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        data: keyboardData,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+
+        var dateCanvas = document
+        .getElementById('dateChart')
+        .getContext('2d');
+
+        var date = {
+            label: 'Number of Surveys',
+            borderColor: 'rgba(255, 99, 132, 0.2)',
+            backgroundColor: 'rgba(255, 99, 132, 1)',
+            data: dateData,
+            type: 'line',
+            pointRadius: 0,
+            fill: false,
+            lineTension: 0,
+            borderWidth: 2,
+        };
+
+        new Chart(dateCanvas, {
+            type: 'line',
+            data: {
+                datasets: [date],
+            },
+            options: {
+                scales: {
+                    xAxes: [
+                        {
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                            },
+                        },
+                    ],
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+    };
+});

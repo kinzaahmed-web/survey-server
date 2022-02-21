@@ -4,53 +4,57 @@
 
 {% block head%}
     {{ super() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-    <!-- <script src="../static/js/summary.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/summary.js"></script>
 {% endblock %}
 {% block content %}
 <h1>Admin Summary</h1>
-<div class="container">
-    <h1 class="center">More Time More Money</h1>
-    <canvas id="moreTimeMoney"></canvas>
-</div>
 
 <div class="container">
     <h1 class="center">Best Headache Reliever</h1>
-    <canvas id="headache"></canvas>
+    <canvas id="headacheChart">
+    </canvas>
 </div> 
 
 <div class="container">
-    <h1 class="center">Favorite Cereal</h1>
-    <canvas id="cereal"></canvas>
+    <h1 class="center">Do You Enjoy Cereal?</h1>
+    <canvas id="cerealChart"></canvas>
 </div>
 
 <div class="container">
     <h1 class="center">YouTube or Netflix</h1>
-    <canvas id="entertainment"></canvas>
+    <canvas id="entertainmentChart"></canvas>
 </div>
 
 <div class="container">
     <h1 class="center">Marvel or DC</h1>
-    <canvas id="comic"></canvas>
+    <canvas id="comicChart"></canvas>
 </div>
 
 <div class="container">
     <h1 class="center">Desktop Computer or Laptop</h1>
-    <canvas id="pc"></canvas>
+    <canvas id="pcChart"></canvas>
 </div>
 
 <div class="container">
     <h1 class="center">Mechanical Keyboard or Magic Keyboard</h1>
-    <canvas id="keyboard"></canvas>
+    <canvas id="keyboardChart"></canvas>
+</div>
+
+<div class="container">
+    <h1 class="center">More Time More Money</h1>
+    <ul id="moreTimeMoreMoney"></ul>
 </div>
 
 <div class="container">
     <h1 class="center">Suggested Question</h1>
-    <canvas id="suggested"></canvas>
+    <ul id="suggestedList"></ul>
 </div>
 
 <div class="container">
     <h1 class="center">Number of surveys per day</h1>
-    <canvas id="timeChart"></canvas>
+    <canvas id="dateChart"></canvas>
 </div>
 {% endblock %}

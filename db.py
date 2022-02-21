@@ -72,7 +72,7 @@ def get_survey_results(reverse, page = 0, surveys_per_page = 10):
     offset = page*surveys_per_page
     with get_db_cursor() as cur:
         if reverse:
-            cur.execute("SELECT * FROM this_or_that ORDER BY completion_date DES limit %s offset %s", (limit, offset))
+            cur.execute("SELECT * FROM this_or_that ORDER BY completion_date DESC limit %s offset %s", (limit, offset))
         else:
             cur.execute("SELECT * FROM this_or_that ORDER BY completion_date ASC limit %s offset %s", (limit, offset))
         results = [{
