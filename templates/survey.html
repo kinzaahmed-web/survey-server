@@ -4,11 +4,7 @@
 {% block head %} 
 
 {{ super() }}
-<style type="text/css">
-  .important {
-    color: #336699;
-  }
-</style>
+<link rel="stylesheet" href="/static/css/survey.css" />
 <script src="static/js/survey.js"></script>
 {% endblock %} {% block content %}
 <h1>Survey</h1>
@@ -17,7 +13,7 @@
   <fieldset>
     <div class="pure-control-group">
       <label for="surveyor_name">Name</label>
-      <input type="text" id="aligned-name" name="surveyor_name" placeholder="name" required />
+      <input type="text" id="aligned-name" name="surveyor_name" placeholder="name" pattern="[A-Za-z]{3,255}" title="Minimum of three letter name max of 255 letters" required />
       <span class="pure-form-message-inline">This is a required field.</span>
     </div>
     <legend style="float: right">
@@ -30,6 +26,8 @@
         id="aligned-more"
         name="more_time_money"
         placeholder="I'd rather have more..."
+        pattern="[A-Za-z]{5,255}" 
+        title="Minimum of three and max of 255 characters response"
         required
       />
       <span class="pure-form-message-inline">This is a required field.</span>
@@ -139,26 +137,23 @@
     </div>
   </fieldset>
   <fieldset>
+    <label for="suggest" class="pure-checkbox">
+      <input type="checkbox" id="suggest" name=""> Want to suggest a good This or That question?
+    </label>
     <div class="pure-controls">
-      <label for="suggest" class="pure-checkbox">
-        <input type="checkbox" id="suggest" name=""> Want to suggest a good This or That question?
-      </label>
       <label for="suggested-questions"></label>
       <input
       type="text"
       id="suggested-questions"
       name="suggested-questions"
       placeholder="This or that..?"
-      required
     />
     </div>
   </fieldset>
-  <fieldset>
-    <div class="pure-controls">
-      <button type="submit" class="pure-button pure-button-primary">
-        Submit
-      </button>
-    </div>
-  </fieldset>
+  <button type="submit" class="pure-button pure-button-primary">
+    <span>
+      Submit
+    </span>
+  </button>
 </form>
 {% endblock %}

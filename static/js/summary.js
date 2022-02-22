@@ -1,12 +1,15 @@
+// Loads all of the charts
 document.addEventListener('DOMContentLoaded', function () {
+    // retrieve data from /api/results url
     $.ajax({
         url: '/api/results',
         data: {
             reverse: true,
         },
         success: function (result) {
-            // extractTimeseriesData(result);
+            // set up all the charts
             setupCharts(
+                // grab all the data for each chart
                 getHeadacheData(result),
                 getCerealData(result),
                 getEntertainmentData(result),
@@ -15,25 +18,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 getKeyboardData(result),
                 getNumSurveysPerDay(result)
             );
-            var moreTimeMoreMoney = document.getElementById('moreTimeMoreMoney');
-            var suggestedList = document.getElementById('#suggestedList');
-            result.forEach((item) => {
-                if (item['more_time_money'] !== null) {
+            // display text field answers: more time more money and suggested questions
+            var moreTimeMoreMoney = document.querySelector('#moreTimeMoreMoney');
+            var suggestedList = document.querySelector('#suggestedList');
+            // iterate through each response
+            result.forEach((response) => {
+                if (response['more_time_money'] !== null) {
                     var node = document.createElement('LI'); 
-                    var textnode = document.createTextNode(`${item['more_time_money']}`);
+                    var textnode = document.createTextNode(`${response['more_time_money']}`);
                     node.appendChild(textnode);
                     moreTimeMoreMoney.appendChild(node);
                 }
-                if (item['suggested-questions'] !== null || item['suggested-questions'] !== undefined) {
+                if (response['suggest'] !== '') {
                     var node = document.createElement('LI'); 
-                    var textnode = document.createTextNode(`${item['suggested-questions']}`);
+                    var textnode = document.createTextNode(`${response['suggest']}`);
                     node.appendChild(textnode);
-                    commentList.appendChild(node);
+                    suggestedList.appendChild(node);
                 }
             });
         },
     });
 
+    // Headache Question data
     var getHeadacheData = (result) => {
         var headacheData = new Array(3);
         headacheData.fill(0);
@@ -49,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return headacheData;
     };
 
+    // Cereal Question data
     var getCerealData = (result) => {
         var cerealData = new Array(2);
         cerealData.fill(0);
@@ -62,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return cerealData;
     };
 
+    // Entertainment Question data
     var getEntertainmentData = (result) => {
         var entertainmentData = new Array(3);
         entertainmentData.fill(0);
@@ -77,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return entertainmentData;
     };
 
+    // Comic Question data
     var getComicData = (result) => {
         var comicData = new Array(2);
         comicData.fill(0);
@@ -90,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return comicData;
     };
 
+    // PC Question data
     var getPCData = (result) => {
         var pcData = new Array(2);
         pcData.fill(0);
@@ -103,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return pcData;
     };
 
+    // Keyboard Question data
     var getKeyboardData = (result) => {
         var keyboardData = new Array(2);
         keyboardData.fill(0);
@@ -116,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return keyboardData;
     };
 
+    // Number of Surveys Per Day data
     var getNumSurveysPerDay = (result) => {
         var map = {};
         result.forEach((item) => {

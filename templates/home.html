@@ -4,17 +4,19 @@
 
 {% block content %}
 <h1 class="home">THIS or THAT Survey!</h1>
-<p class="home">Welcome to my awesome homepage.</p>
+<p class="home">Welcome to the THIS or THAT survey! This survey is designed to ask <b>YOU</b> a few
+    questions and compare amongst fellow surveyors on their responses - Enjoy!
+</p>
 
 <div class="home-row" style="size: 2;">
     <div class="column">
         <a href="{{ url_for("survey") }}">
-            <button class="homebutton">Start Survey!</button>
+            <button class="homebutton"><span>Start Survey!</span></button>
         </a>
     </div>
     <div class="column">
         <a href="{{ url_for("decline") }}">
-            <button class="homebutton">Not interested</button>
+            <button class="homebutton"><span>Not interested</span></button>
         </a>
     </div>
   </div>

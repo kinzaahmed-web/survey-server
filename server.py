@@ -14,6 +14,7 @@ def index():
 
 @app.route("/survey", methods=['GET', 'POST'])
 def survey():
+    # grab each question answer from the submitted form 
     surveyor_name = request.form.get("surveyor_name")
     more_time_money = request.form.get("more_time_money")
     headache = request.form.get("headache")
@@ -24,6 +25,7 @@ def survey():
     comic = request.form.get("comic")
     pc = request.form.get("pc")
     keyboard = request.form.get("keyboard")
+    suggest = request.form.get("suggested-questions")
     completion_date = datetime.now()
     survey = { 
         'surveyor_name': surveyor_name, 
@@ -34,12 +36,16 @@ def survey():
         'entertainment': entertainment, 
         'comic': comic, 
         'pc': pc, 
-        'keyboard': keyboard
+        'keyboard': keyboard,
+        'suggest': suggest
     }
-    # check if everything is filled out before passing to db
-    if (value == None for value in survey.values()):
+
+    # check if all required fields are filled out before passing to db
+    fields = [surveyor_name, more_time_money, headache, cereal, entertainment, comic, pc, keyboard, completion_date]
+    if None in fields or '' in fields:
         return render_template("survey.html") 
     
+    # add the survey to the db
     db.add_survey(survey)
     return redirect(url_for('thanks'))
 
@@ -53,9 +59,11 @@ def thanks():
 
 @app.route('/api/results', methods=['GET'])
 def results():
+    # check if reverse is true or not 
     reverse = request.args.get("reverse", False)
     if (reverse != False):
         reverse = True if reverse.lower() == "true" else False
+    # return a json of all the results
     return jsonify(db.get_survey_results(reverse))
 
 @app.route("/admin/summary")

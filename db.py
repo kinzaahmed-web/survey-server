@@ -52,8 +52,9 @@ def add_survey(survey):
                                                     entertainment, 
                                                     comic, 
                                                     pc, 
-                                                    keyboard
-                                                ) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
+                                                    keyboard,
+                                                    suggest
+                                                ) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
                                                 (
                                                     survey['surveyor_name'], 
                                                     survey['completion_date'], 
@@ -63,7 +64,8 @@ def add_survey(survey):
                                                     survey['entertainment'], 
                                                     survey['comic'], 
                                                     survey['pc'], 
-                                                    survey['keyboard']
+                                                    survey['keyboard'],
+                                                    survey['suggest']
                                                 )
                     )
 

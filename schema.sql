@@ -23,7 +23,8 @@ INSERT INTO this_or_that(
                             entertainment, 
                             comic, 
                             pc, 
-                            keyboard
+                            keyboard,
+                            suggest
                         ) values (
                             'Kinza Ahmed', 
                             'Fri, 18 Feb 2022', 
@@ -33,5 +34,6 @@ INSERT INTO this_or_that(
                             'both',
                             'marvel',
                             'laptop',
-                            'mechanical keyboard'
+                            'mechanical keyboard',
+                            ''
                             );
