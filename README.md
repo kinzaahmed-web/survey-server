@@ -1,5 +1,4 @@
-# survey-server
-THIS or THAT survey website!
+# THIS or THAT survey website!
 
 ## Link to Site
 
