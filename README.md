@@ -6,9 +6,15 @@
 
 ## Tech Stack
 Flask
+
 Jinja Templating
+
 Hosted on Heroku
+
 DB: Heroku's pgsql 
+
 Pure CSS
+
 JQuery
+
 Chartjs
